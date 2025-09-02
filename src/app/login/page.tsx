@@ -47,7 +47,8 @@ export default function LoginPage() {
             destination = '/cmsf';
             break;
         }
-      router.replace(destination);
+      // Using window.location.href to force a full page reload and ensure AuthProvider re-evaluates the session.
+      window.location.href = destination;
     } else {
       setError(result.error || 'An unknown error occurred.');
       setIsSubmitting(false);
