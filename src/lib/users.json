@@ -1,0 +1,22 @@
+[
+  {
+    "username": "issuer",
+    "password": "password",
+    "role": "issuer"
+  },
+  {
+    "username": "investor",
+    "password": "password",
+    "role": "investor"
+  },
+  {
+    "username": "regulator",
+    "password": "password",
+    "role": "regulator"
+  },
+  {
+    "username": "cmsf",
+    "password": "password",
+    "role": "cmsf"
+  }
+]
