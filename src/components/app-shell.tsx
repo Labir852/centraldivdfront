@@ -103,19 +103,24 @@ export function AppShell({ children }: { children: React.ReactNode;}) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 items-center gap-4 border-b bg-card px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
-            <SidebarTrigger>
-              <Menu />
-            </SidebarTrigger>
-            <div className="w-full flex-1">
-                 {/* Can add breadcrumbs or page title here later */}
-            </div>
-            <Avatar>
-              <AvatarImage src="https://placehold.co/40x40.png" alt="Admin User" data-ai-hint="profile person" />
-              <AvatarFallback>AU</AvatarFallback>
-            </Avatar>
-        </header>
-        <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
+        <div className="flex flex-col min-h-screen">
+            <header className="flex h-14 items-center gap-4 border-b bg-card px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
+                <SidebarTrigger>
+                <Menu />
+                </SidebarTrigger>
+                <div className="w-full flex-1">
+                    {/* Can add breadcrumbs or page title here later */}
+                </div>
+                <Avatar>
+                <AvatarImage src="https://placehold.co/40x40.png" alt="Admin User" data-ai-hint="profile person" />
+                <AvatarFallback>AU</AvatarFallback>
+                </Avatar>
+            </header>
+            <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
+            <footer className="p-4 text-center text-sm text-muted-foreground border-t">
+                Developed with ❤️ by ICT Department , Capital Market Stabilization Fund
+            </footer>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );
