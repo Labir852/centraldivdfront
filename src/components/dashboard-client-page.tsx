@@ -143,7 +143,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search..."
-                className="pl-9 w-full md:w-64"
+                className="pl-9 w-full sm:w-64"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -175,7 +175,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {data.metrics
           .filter((metric) => visibleMetrics[metric.id])
           .map((metric) => (
@@ -196,8 +196,8 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         ))}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-5">
-        <Card className="md:col-span-3">
+      <div className="grid gap-6 lg:grid-cols-5">
+        <Card className="lg:col-span-3">
           <CardHeader>
             <CardTitle className="font-headline">Financial Overview</CardTitle>
             <CardDescription>A summary of recent financial activity.</CardDescription>
@@ -208,7 +208,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
             </div>
           </CardContent>
         </Card>
-        <Card className="md:col-span-2">
+        <Card className="lg:col-span-2">
             <CardHeader>
                 <CardTitle className="font-headline">Detailed Records</CardTitle>
                 <CardDescription>A complete list of all records.</CardDescription>

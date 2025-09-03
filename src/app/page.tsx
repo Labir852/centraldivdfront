@@ -7,10 +7,10 @@ import Link from 'next/link';
 
 export default function WelcomePage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] text-center bg-grid-slate-100">
+    <div className="flex flex-col items-center justify-center min-h-screen text-center">
        <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-      <main className="container mx-auto px-4 py-16 animate-fade-in-up">
-        <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tighter mb-4 text-primary animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+      <main className="container mx-auto px-4 py-8 md:py-16 animate-fade-in-up">
+        <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-4 text-primary animate-fade-in-up" style={{animationDelay: '0.2s'}}>
           Centralized Dividend Distribution Hub
         </h1>
         <p className="max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground mb-8 animate-fade-in-up" style={{animationDelay: '0.4s'}}>
@@ -28,7 +28,7 @@ export default function WelcomePage() {
         <h1 className="font-headline font-bold tracking-tighter mb-4 text-green-600 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
          Powered By Capital Market Stabilization Fund 
         </h1>
-        <div className="flex justify-center gap-4 animate-fade-in-up" style={{animationDelay: '0.6s'}}>
+        <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up" style={{animationDelay: '0.6s'}}>
           <Button asChild size="lg" className="font-headline shadow-lg hover:shadow-xl transition-shadow">
             <Link href="/issuers">
               Get Started <ArrowRight className="ml-2 h-5 w-5" />
@@ -39,7 +39,7 @@ export default function WelcomePage() {
           </Button>
         </div>
 
-        <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4 animate-fade-in-up" style={{animationDelay: '0.8s'}}>
+        <div className="mt-16 md:mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4 animate-fade-in-up" style={{animationDelay: '0.8s'}}>
           <FeatureCard
             title="For Issuers"
             description="Manage investor data, track total holdings, and handle tax obligations seamlessly."
