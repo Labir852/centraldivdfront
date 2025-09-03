@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Landmark, Users, ShieldCheck, PiggyBank } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function WelcomePage() {
@@ -14,6 +15,14 @@ export default function WelcomePage() {
         <p className="max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground mb-8 animate-fade-in-up" style={{animationDelay: '0.4s'}}>
           Your comprehensive platform for tracking, monitoring, and managing capital market funds with efficiency and transparency.
         </p>
+        <div>
+          <Image
+            src="/assets/illustrations/undraw_investment_re_bov7.svg"
+            alt="Description of my image"
+            width={500}
+            height={300}
+          />
+        </div>
         <h1 className="font-headline font-bold tracking-tighter mb-4 text-green-600 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
          Powered By Capital Market Stabilization Fund 
         </h1>

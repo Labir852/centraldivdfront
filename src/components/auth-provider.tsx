@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (loading) return;
-    
+
     // We only want to re-evaluate authorization when the path changes.
     if (pathname === checkedPath) return;
 
@@ -107,7 +107,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   if (loading || (pathname !== checkedPath && !loading)) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
-  
   const isPublic = publicRoutes.includes(pathname);
   const showShell = !isPublic || (pathname === '/' && !!user);
 

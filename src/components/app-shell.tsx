@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { logout } from '@/lib/auth';
 import { useAuth } from './auth-provider';
+import { json } from 'stream/consumers';
 
 type NavItem = {
   href: string;
@@ -39,8 +40,8 @@ const allNavItems: NavItem[] = [
 export function AppShell({ children }: { children: React.ReactNode;}) {
   const pathname = usePathname();
   const { user, loading } = useAuth();
+  const userName = user?.username || 'Guest';
   const userRole = user?.role || '';
-
   const navItems = React.useMemo(() => {
     if(!userRole) return [];
     return allNavItems.filter(item => item.roles.includes(userRole) || item.href === '/');
@@ -92,8 +93,8 @@ export function AppShell({ children }: { children: React.ReactNode;}) {
               <AvatarFallback>AU</AvatarFallback>
             </Avatar>
             <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-              <span className="text-sm font-semibold text-sidebar-foreground">Admin User</span>
-              <span className="text-xs text-sidebar-foreground/70">admin@dividend.hub</span>
+              <span className="text-sm font-semibold text-sidebar-foreground">{userName}</span>
+              <span className="text-xs text-sidebar-foreground/70">{userRole}</span>
             </div>
             <Button variant="ghost" size="icon" className="ml-auto text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent group-data-[collapsible=icon]:hidden" onClick={handleLogout}>
                 <LogOut className="h-4 w-4" />
