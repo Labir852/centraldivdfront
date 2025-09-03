@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { logout } from '@/lib/auth';
 import { useAuth } from './auth-provider';
 import { json } from 'stream/consumers';
+import Image from 'next/image';
 
 type NavItem = {
   href: string;
@@ -59,12 +60,19 @@ export function AppShell({ children }: { children: React.ReactNode;}) {
       <Sidebar>
         <SidebarHeader className="p-4">
           <div className="flex items-center gap-3">
-             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                <PiggyBank className="h-6 w-6 text-accent-foreground" />
+             <div className="flex h-10 w-12 items-center justify-center rounded-lg bg-muted">
+                {/* <PiggyBank className="h-6 w-6 text-accent-foreground" /> */}
+                <Image 
+                   src="/assets/cmsf_logo.png"
+                    alt="CMSF Logo"
+                    width={100}
+                    height={100}
+                    className="mx-auto object-contain"
+                />
               </div>
             <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-                <h2 className="font-headline font-semibold text-lg text-sidebar-foreground">Dividend Hub</h2>
-                <p className="text-xs text-sidebar-foreground/70">Capital Market</p>
+                <h2 className="font-headline font-semibold text-lg text-sidebar-foreground">Distribution Hub</h2>
+                <p className="text-xs text-sidebar-foreground/70">Capital Market Stabilization Fund</p>
             </div>
           </div>
         </SidebarHeader>
@@ -89,7 +97,7 @@ export function AppShell({ children }: { children: React.ReactNode;}) {
         <SidebarFooter className="p-4 border-t border-sidebar-border">
           <div className="flex items-center gap-3">
             <Avatar>
-              <AvatarImage src="https://placehold.co/40x40.png" alt="Admin User" data-ai-hint="profile person" />
+              <AvatarImage src="/assets/user.png" alt="Admin User" data-ai-hint="profile person" />
               <AvatarFallback>AU</AvatarFallback>
             </Avatar>
             <div className="flex flex-col group-data-[collapsible=icon]:hidden">
@@ -110,9 +118,10 @@ export function AppShell({ children }: { children: React.ReactNode;}) {
                 </SidebarTrigger>
                 <div className="w-full flex-1">
                     {/* Can add breadcrumbs or page title here later */}
+                    
                 </div>
                 <Avatar>
-                <AvatarImage src="https://placehold.co/40x40.png" alt="Admin User" data-ai-hint="profile person" />
+                <AvatarImage src="/assets/user.png"  alt="Admin User" data-ai-hint="profile person" />
                 <AvatarFallback>AU</AvatarFallback>
                 </Avatar>
             </header>
