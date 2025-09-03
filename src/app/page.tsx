@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Landmark, Users, ShieldCheck, PiggyBank } from 'lucide-react';
@@ -18,7 +19,7 @@ export default function WelcomePage() {
         <div>
           <Image
             src="/assets/illustrations/undraw_investment_re_bov7.svg"
-            alt="Description of my image"
+            alt="Investment illustration"
             width={500}
             height={300}
           />
