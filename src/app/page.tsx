@@ -23,6 +23,15 @@ export default function WelcomePage() {
             height={300}
           />
         </div>
+        <div className="mt-8 mb-2 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+            <Image 
+                src="/assets/cmsf_logo.png"
+                alt="CMSF Logo"
+                width={80}
+                height={80}
+                className="mx-auto"
+            />
+        </div>
         <h1 className="font-headline font-bold tracking-tighter mb-4 text-green-600 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
          Powered By Capital Market Stabilization Fund 
         </h1>
