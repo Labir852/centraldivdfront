@@ -16,20 +16,12 @@ export default function WelcomePage() {
         <p className="max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground mb-8 animate-fade-in-up" style={{animationDelay: '0.4s'}}>
           Your comprehensive platform for tracking, monitoring, and managing capital market funds with efficiency and transparency.
         </p>
-        <div>
-          <Image
-            src="/assets/illustrations/undraw_investment_re_bov7.svg"
-            alt="Investment illustration"
-            width={500}
-            height={300}
-          />
-        </div>
         <div className="mt-8 mb-2 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <Image 
                 src="/assets/cmsf_logo.png"
                 alt="CMSF Logo"
-                width={80}
-                height={80}
+                width={120}
+                height={120}
                 className="mx-auto"
             />
         </div>
