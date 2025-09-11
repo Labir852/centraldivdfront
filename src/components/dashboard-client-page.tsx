@@ -100,10 +100,12 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
             tds: (item: any) => formatCurrency(item.tds),
             status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
             action: (item: any) => (
-                <Button variant="outline" size="sm">
-                    <Download className="mr-2 h-4 w-4" />
-                    Challan
-                </Button>
+                <a href="/assets/PDF/2526-0006419773.pdf" download>
+                    <Button variant="outline" size="sm">
+                        <Download className="mr-2 h-4 w-4" />
+                        Challan
+                    </Button>
+                </a>
             ),
         },
         investors: {
@@ -111,10 +113,12 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
             tds: (item: any) => formatCurrency(item.tds),
             status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
             action: (item: any) => (
-                <Button variant="outline" size="sm">
-                    <Download className="mr-2 h-4 w-4" />
-                    Challan
-                </Button>
+                <a href="/assets/PDF/2526-0006419773.pdf" download>
+                    <Button variant="outline" size="sm">
+                        <Download className="mr-2 h-4 w-4" />
+                        Challan
+                    </Button>
+                </a>
             ),
         },
         regulators: {

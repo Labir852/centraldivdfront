@@ -2,17 +2,18 @@ import { ChartConfig } from '@/components/ui/chart';
 import React from 'react';
 
 const formatCurrency = (value: number) => {
-    if (value >= 1e9) {
-        return `৳${(value / 1e9).toFixed(1)}B`;
-    }
-    if (value >= 1e6) {
-        return `৳${(value / 1e6).toFixed(1)}M`;
-    }
-    if (value >= 1e3) {
-        return `৳${(value / 1e3).toFixed(1)}K`;
-    }
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'BDT' }).format(value);
-}
+    // if (value >= 1e9) {
+    //     return `৳${(value / 1e9).toFixed(1)}B`;
+    // }
+    // if (value >= 1e6) {
+    //     return `৳${(value / 1e6).toFixed(1)}M`;
+    // }
+    // if (value >= 1e3) {
+    //     return `৳${(value / 1e3).toFixed(1)}K`;
+    // }
+    // return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'BDT' }).format(value);
+    return `৳${value}`
+  }
 
 const chartConfigBase = {
   amount: {
@@ -21,10 +22,10 @@ const chartConfigBase = {
 } satisfies ChartConfig;
 
 const baseMetrics = (total: number, investors: number) => [
-  { id: 'totalAmount', title: 'Total Amount Held', value: formatCurrency(total), change: '+2.1%', icon: 'DollarSign' },
-  { id: 'totalInvestors', title: 'Total Investors', value: investors.toLocaleString(), change: '+10', icon: 'Users' },
+  { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), change: '+2.1%', icon: 'DollarSign' },
+  { id: 'totalInvestors', title: 'Total Issuer Company', value: investors.toLocaleString(), change: '+10', icon: 'Users' },
   { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(total * 0.1), change: '+1.5%', icon: 'FileText' },
-  { id: 'avgHolding', title: 'Average Holding', value: formatCurrency(total / investors), change: '-0.5%', icon: 'Landmark' },
+  // { id: 'avgHolding', title: 'Average Holding', value: formatCurrency(total / investors), change: '-0.5%', icon: 'Landmark' },
 ];
 
 const baseChartData = [
@@ -37,7 +38,7 @@ const baseChartData = [
 ];
 
 const baseTableColumns = [
-    { header: 'Investor ID', accessor: 'id' },
+    { header: 'Issuer Name', accessor: 'id' },
     { header: 'Name', accessor: 'name' },
     { header: 'Amount', accessor: 'amount' },
     { header: 'TDS', accessor: 'tds' },
@@ -45,14 +46,14 @@ const baseTableColumns = [
 ];
 
 const investorsTableData = [
-  { id: 'INV-001', name: 'Liam Johnson', amount: 1250000, tds: 125000, status: 'Paid' },
-  { id: 'INV-002', name: 'Olivia Smith', amount: 850000, tds: 85000, status: 'Pending' },
-  { id: 'INV-003', name: 'Noah Williams', amount: 2300000, tds: 230000, status: 'Paid' },
-  { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
-  { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
-  { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
-  { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
-  { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
+  { id: 'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', amount: 1250000, tds: 125000, status: 'Paid' },
+  { id: 'GP', name: 'Grameenphone Ltd.', amount: 850000, tds: 85000, status: 'Pending' },
+  { id: 'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', amount: 2300000, tds: 230000, status: 'Paid' },
+  // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
+  // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
+  // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
+  // { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
+  // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
 ];
 
 export const getIssuersData = () => ({
@@ -64,7 +65,7 @@ export const getIssuersData = () => ({
 });
 
 export const getInvestorsData = () => ({
-  metrics: baseMetrics(89750000, 5820),
+  metrics: baseMetrics(1000, 3),
   chartData: [...baseChartData].reverse().map(d => ({ ...d, amount: d.amount * 0.8 })),
   chartConfig: chartConfigBase,
   tableData: [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount * 0.75, tds: d.amount * 0.75 * 0.1})).sort((a,b) => a.id > b.id ? 1 : -1),
