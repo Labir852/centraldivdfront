@@ -39,17 +39,18 @@ const baseChartData = [
 ];
 
 const baseTableColumns = [
-    { header: 'Issuer Name', accessor: 'id' },
-    { header: 'Name', accessor: 'name' },
+    { header: 'BOID', accessor: 'id' },
+    { header: 'TIN', accessor: 'tin' },
+    { header: 'Issuer Name', accessor: 'name' },
     { header: 'Dividend', accessor: 'amount' },
     { header: 'TDS', accessor: 'tds' },
     { header: 'Status', accessor: 'status' },
 ];
 
 const investorsTableData = [
-  { id: 'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', amount: 700, tds: 105, status: 'Paid' },
-  { id: 'GP', name: 'Grameenphone Ltd.', amount: 300, tds: 45, status: 'Pending' },
-  { id: 'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', amount: 500, tds: 75, status: 'Paid' },
+  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', amount: 700, tds: 105, status: 'Paid' },
+  { id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', amount: 300, tds: 45, status: 'Pending' },
+  { id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', amount: 500, tds: 75, status: 'Paid' },
   // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
   // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
   // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
