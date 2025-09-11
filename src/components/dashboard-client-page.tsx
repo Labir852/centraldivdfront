@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Search, Settings2, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown } from 'lucide-react';
+import { Search, Settings2, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download } from 'lucide-react';
 import { ChartConfig } from '@/components/ui/chart';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -89,16 +89,33 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
   }, [rawData]);
 
   const tableColumns = useMemo(() => {
+    const baseColumns = [...rawData.tableColumns];
+    if(dataType === 'investors' || dataType === 'issuers'){
+        baseColumns.push({header: 'Action', accessor: 'action'});
+    }
+
     const renderFunctions: { [key in DataType]: { [accessor: string]: (item: any) => ReactNode } } = {
         issuers: {
             amount: (item: any) => formatCurrency(item.amount),
             tds: (item: any) => formatCurrency(item.tds),
             status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
+            action: (item: any) => (
+                <Button variant="outline" size="sm">
+                    <Download className="mr-2 h-4 w-4" />
+                    Challan
+                </Button>
+            ),
         },
         investors: {
             amount: (item: any) => formatCurrency(item.amount),
             tds: (item: any) => formatCurrency(item.tds),
             status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
+            action: (item: any) => (
+                <Button variant="outline" size="sm">
+                    <Download className="mr-2 h-4 w-4" />
+                    Challan
+                </Button>
+            ),
         },
         regulators: {
             status: (item: any) => <Badge variant={item.status === 'Active' ? 'default' : 'destructive'}>{item.status}</Badge>,
@@ -108,7 +125,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
             risk: (item: any) => <Badge variant={item.risk === 'Low' ? 'default' : item.risk === 'Medium' ? 'secondary' : 'destructive'}>{item.risk}</Badge>,
         }
     };
-    return rawData.tableColumns.map(c => ({...c, render: renderFunctions[dataType][c.accessor]}))
+    return baseColumns.map(c => ({...c, render: renderFunctions[dataType][c.accessor]}))
   }, [rawData.tableColumns, dataType]);
 
   
@@ -129,6 +146,8 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
       )
     );
   }, [data.tableData, searchTerm, searchable]);
+
+  const showChart = dataType !== 'investors';
   
   return (
     <div className="space-y-6">
@@ -196,25 +215,27 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         ))}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-5">
-        <Card className="lg:col-span-3">
-          <CardHeader>
-            <CardTitle className="font-headline">Financial Overview</CardTitle>
-            <CardDescription>A summary of recent financial activity.</CardDescription>
-          </CardHeader>
-          <CardContent>
-             <div className="h-[300px] w-full">
-                <FinancialChart chartData={data.chartData} chartConfig={data.chartConfig} />
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="lg:col-span-2">
+      <div className={`grid gap-6 ${showChart ? 'lg:grid-cols-5' : ''}`}>
+        {showChart && (
+            <Card className="lg:col-span-3">
+            <CardHeader>
+                <CardTitle className="font-headline">Financial Overview</CardTitle>
+                <CardDescription>A summary of recent financial activity.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="h-[300px] w-full">
+                    <FinancialChart chartData={data.chartData} chartConfig={data.chartConfig} />
+                </div>
+            </CardContent>
+            </Card>
+        )}
+        <Card className={showChart ? "lg:col-span-2" : "w-full"}>
             <CardHeader>
                 <CardTitle className="font-headline">Detailed Records</CardTitle>
                 <CardDescription>A complete list of all records.</CardDescription>
             </CardHeader>
             <CardContent>
-                 <ScrollArea className="h-[340px]">
+                 <ScrollArea className={showChart ? "h-[340px]" : "h-[500px]"}>
                     <Table>
                         <TableHeader className="sticky top-0 bg-card">
                             <TableRow>
