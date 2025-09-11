@@ -23,11 +23,12 @@ const chartConfigBase = {
 } satisfies ChartConfig;
 
 const baseMetrics = (total: number, investors: number, totalTds: number) => [
-  { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), change: '+2.1%', icon: 'DollarSign' },
-  { id: 'totalInvestors', title: 'Total Issuer Company', value: investors.toLocaleString(), change: '+10', icon: 'Users' },
-  { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(totalTds), change: '+1.5%', icon: 'FileText' },
-  // { id: 'avgHolding', title: 'Average Holding', value: formatCurrency(total / investors), change: '-0.5%', icon: 'Landmark' },
-];
+  { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), icon: 'DollarSign' },
+  { id: 'totalInvestors', title: 'Total Issuer Company', value: investors.toLocaleString(),  icon: 'Users' },
+ { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency((total - totalTds)),  icon: 'Landmark' },
+  
+  { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(totalTds), change: '-15%', icon: 'FileText' },
+  ];
 
 const baseChartData = [
   { name: 'Jan', amount: 2500000 },
@@ -42,15 +43,17 @@ const baseTableColumns = [
     { header: 'BOID', accessor: 'id' },
     { header: 'TIN', accessor: 'tin' },
     { header: 'Issuer Name', accessor: 'name' },
+    { header: 'Record Date', accessor: 'recorddate' },
     { header: 'Dividend', accessor: 'amount' },
     { header: 'TDS', accessor: 'tds' },
+    { header: 'Net Dividend', accessor:'netdividend'},
     { header: 'Status', accessor: 'status' },
 ];
 
 const investorsTableData = [
-  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', amount: 700, tds: 105, status: 'Paid' },
-  { id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', amount: 300, tds: 45, status: 'Pending' },
-  { id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', amount: 500, tds: 75, status: 'Paid' },
+  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 700, tds: 105, status: 'Paid' },
+  { id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
+  { id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
   // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
   // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
   // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
@@ -68,7 +71,7 @@ export const getIssuersData = () => ({
   tableColumns: baseTableColumns
 });
 
-const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount * 0.85, tds: d.amount * 0.15})).sort((a,b) => a.id > b.id ? 1 : -1);
+const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: d.amount * 0.15,netdividend:d.amount * 0.85})).sort((a,b) => a.id > b.id ? 1 : -1);
 const totalTdsFromInvestorData = investorTableDataForInvestor.reduce((sum, item) => sum + item.tds, 0);
 
 export const getInvestorsData = () => ({

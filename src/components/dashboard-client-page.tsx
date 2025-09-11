@@ -157,7 +157,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">{title}</h1>
+          <h1 className="text-3xl font-bold font-headline">Welcome {title}</h1>
           <p className="text-muted-foreground">{description}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
                 <div className="text-2xl font-bold">{metric.value}</div>
                 {metric.change && (
                   <p className={`text-xs ${metric.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
-                    {metric.change} from last month
+                    {metric.change}
                   </p>
                 )}
               </CardContent>
