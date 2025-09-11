@@ -127,7 +127,7 @@ export function AppShell({ children }: { children: React.ReactNode;}) {
             </header>
             <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
             <footer className="p-4 text-center text-sm text-muted-foreground border-t">
-                Developed with ❤️ by ICT Department , Capital Market Stabilization Fund
+                Developed by ICT Department , Capital Market Stabilization Fund
             </footer>
         </div>
       </SidebarInset>

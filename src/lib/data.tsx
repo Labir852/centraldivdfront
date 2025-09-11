@@ -1,3 +1,4 @@
+
 import { ChartConfig } from '@/components/ui/chart';
 import React from 'react';
 
@@ -21,10 +22,10 @@ const chartConfigBase = {
   },
 } satisfies ChartConfig;
 
-const baseMetrics = (total: number, investors: number) => [
+const baseMetrics = (total: number, investors: number, totalTds: number) => [
   { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), change: '+2.1%', icon: 'DollarSign' },
   { id: 'totalInvestors', title: 'Total Issuer Company', value: investors.toLocaleString(), change: '+10', icon: 'Users' },
-  { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(total * 0.1), change: '+1.5%', icon: 'FileText' },
+  { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(totalTds), change: '+1.5%', icon: 'FileText' },
   // { id: 'avgHolding', title: 'Average Holding', value: formatCurrency(total / investors), change: '-0.5%', icon: 'Landmark' },
 ];
 
@@ -40,15 +41,15 @@ const baseChartData = [
 const baseTableColumns = [
     { header: 'Issuer Name', accessor: 'id' },
     { header: 'Name', accessor: 'name' },
-    { header: 'Amount', accessor: 'amount' },
+    { header: 'Dividend', accessor: 'amount' },
     { header: 'TDS', accessor: 'tds' },
     { header: 'Status', accessor: 'status' },
 ];
 
 const investorsTableData = [
-  { id: 'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', amount: 1250000, tds: 125000, status: 'Paid' },
-  { id: 'GP', name: 'Grameenphone Ltd.', amount: 850000, tds: 85000, status: 'Pending' },
-  { id: 'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', amount: 2300000, tds: 230000, status: 'Paid' },
+  { id: 'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', amount: 700, tds: 105, status: 'Paid' },
+  { id: 'GP', name: 'Grameenphone Ltd.', amount: 300, tds: 45, status: 'Pending' },
+  { id: 'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', amount: 500, tds: 75, status: 'Paid' },
   // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
   // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
   // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
@@ -56,19 +57,24 @@ const investorsTableData = [
   // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
 ];
 
+const totalTdsFromInvestors = investorsTableData.reduce((sum, item) => sum + item.tds, 0);
+
 export const getIssuersData = () => ({
-  metrics: baseMetrics(125500000, 3450),
+  metrics: baseMetrics(125500000, 3450, totalTdsFromInvestors),
   chartData: baseChartData,
   chartConfig: chartConfigBase,
   tableData: investorsTableData,
   tableColumns: baseTableColumns
 });
 
+const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount * 0.85, tds: d.amount * 0.15})).sort((a,b) => a.id > b.id ? 1 : -1);
+const totalTdsFromInvestorData = investorTableDataForInvestor.reduce((sum, item) => sum + item.tds, 0);
+
 export const getInvestorsData = () => ({
-  metrics: baseMetrics(1000, 3),
+  metrics: baseMetrics(1500, 3, totalTdsFromInvestorData),
   chartData: [...baseChartData].reverse().map(d => ({ ...d, amount: d.amount * 0.8 })),
   chartConfig: chartConfigBase,
-  tableData: [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount * 0.75, tds: d.amount * 0.75 * 0.1})).sort((a,b) => a.id > b.id ? 1 : -1),
+  tableData: investorTableDataForInvestor,
   tableColumns: baseTableColumns,
 });
 
