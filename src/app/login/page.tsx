@@ -67,7 +67,7 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">TIN / Username</Label>
               <Input
                 id="username"
                 name="username"
