@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useMemo, type ReactNode } from 'react';
@@ -12,6 +13,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Search, Settings2, Wallet, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download } from 'lucide-react';
 import { ChartConfig } from '@/components/ui/chart';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const FinancialChart = dynamic(() => import('@/components/financial-chart').then(mod => mod.FinancialChart), {
   ssr: false,
@@ -99,7 +101,23 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         issuers: {
             amount: (item: any) => item.amount,
             tds: (item: any) => item.tds,
-            status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
+            status: (item: any) => {
+              if (item.status === 'Pending') {
+                return (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Badge variant="secondary">{item.status}</Badge>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Payment is pending</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                );
+              }
+              return <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>;
+            },
             action: (item: any) => (
                 <a href="/assets/PDF/2526-0006419773.pdf" download>
                     <Button variant="outline" size="sm">
@@ -112,7 +130,23 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         investors: {
             amount: (item: any) => item.amount,
             tds: (item: any) => item.tds,
-            status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
+            status: (item: any) => {
+              if (item.status === 'Pending') {
+                return (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Badge variant="secondary">{item.status}</Badge>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Payment is pending</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                );
+              }
+              return <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>;
+            },
             action: (item: any) => (
                 <a href="/assets/PDF/2526-0006419773.pdf" download>
                     <Button variant="outline" size="sm">
@@ -276,5 +310,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     </div>
   );
 }
+
+    
 
     

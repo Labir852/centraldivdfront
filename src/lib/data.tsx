@@ -30,6 +30,7 @@ const baseMetrics = (total: number, investors: number, totalTds: number) => [
   ];
 
 const baseTableColumns = [
+    { header: 'SL', accessor: 'sl' },
     { header: 'BOID', accessor: 'id' },
     { header: 'TIN', accessor: 'tin' },
     { header: 'Issuer Name', accessor: 'name' },
@@ -41,9 +42,9 @@ const baseTableColumns = [
 ];
 
 const investorsTableData = [
-  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
-  { id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Paid' },
-  { id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
+  { sl:1, id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
+  { sl:2, id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
+  { sl:3, id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
   // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
   // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
   // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
@@ -60,7 +61,7 @@ export const getIssuersData = () => ({
   tableColumns: baseTableColumns
 });
 
-const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.id > b.id ? 1 : -1);
+const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
 const totalTdsFromInvestorData = parseFloat(investorTableDataForInvestor.reduce((sum, item) => sum + parseFloat(item.tds), 0).toFixed(2));
 const totalDividendFromInvestors = parseFloat(investorsTableData.reduce((sum, item) => sum + item.amount, 0).toFixed(2));
 
