@@ -240,7 +240,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
                 <CardDescription>A complete list of all records.</CardDescription>
             </CardHeader>
             <CardContent>
-                 <ScrollArea className={showChart ? "h-[340px]" : "h-[500px]"}>
+                 <ScrollArea className={showChart ? "h-[340px]" : ""}>
                     <Table>
                         <TableHeader className="sticky top-0 bg-card">
                             <TableRow>
@@ -276,3 +276,5 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     </div>
   );
 }
+
+    
