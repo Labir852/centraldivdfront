@@ -118,14 +118,35 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
               }
               return <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>;
             },
-            action: (item: any) => (
-                <a href="/assets/PDF/2526-0006419773.pdf" download>
-                    <Button variant="outline" size="sm">
-                        <Download className="mr-2 h-4 w-4" />
-                        Challan
-                    </Button>
-                </a>
-            ),
+            action: (item: any) => {
+                if (item.status === 'Pending') {
+                    return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <span tabIndex={0}>
+                                        <Button variant="outline" size="sm" disabled>
+                                            <Download className="mr-2 h-4 w-4" />
+                                            Challan
+                                        </Button>
+                                    </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Payment is pending</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    );
+                }
+                return (
+                    <a href="/assets/PDF/2526-0006419773.pdf" download>
+                        <Button variant="outline" size="sm">
+                            <Download className="mr-2 h-4 w-4" />
+                            Challan
+                        </Button>
+                    </a>
+                );
+            },
         },
         investors: {
             amount: (item: any) => item.amount,
@@ -147,14 +168,35 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
               }
               return <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>;
             },
-            action: (item: any) => (
-                <a href="/assets/PDF/2526-0006419773.pdf" download>
-                    <Button variant="outline" size="sm">
-                        <Download className="mr-2 h-4 w-4" />
-                        Challan
-                    </Button>
-                </a>
-            ),
+            action: (item: any) => {
+                if (item.status === 'Pending') {
+                    return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <span tabIndex={0}>
+                                        <Button variant="outline" size="sm" disabled>
+                                            <Download className="mr-2 h-4 w-4" />
+                                            Challan
+                                        </Button>
+                                    </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Payment is pending</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    );
+                }
+                return (
+                    <a href="/assets/PDF/2526-0006419773.pdf" download>
+                        <Button variant="outline" size="sm">
+                            <Download className="mr-2 h-4 w-4" />
+                            Challan
+                        </Button>
+                    </a>
+                );
+            },
         },
         regulators: {
             status: (item: any) => <Badge variant={item.status === 'Active' ? 'default' : 'destructive'}>{item.status}</Badge>,
