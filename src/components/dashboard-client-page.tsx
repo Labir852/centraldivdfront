@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Search, Settings2, wallet, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download } from 'lucide-react';
+import { Search, Settings2, Wallet, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download } from 'lucide-react';
 import { ChartConfig } from '@/components/ui/chart';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -61,12 +61,13 @@ interface DashboardClientPageProps {
 }
 
 const iconMap: { [key: string]: LucideIcon } = {
-  wallet,
+  Wallet,
   Users,
   Landmark,
   FileText,
   ArrowUp,
   ArrowDown,
+  DollarSign,
 };
 
 const formatCurrency = (value: number) => {
