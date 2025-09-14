@@ -51,7 +51,7 @@ const baseTableColumns = [
 ];
 
 const investorsTableData = [
-  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 700, tds: 105, status: 'Paid' },
+  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 300, status: 'Paid' },
   { id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
   { id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
   // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
@@ -60,7 +60,6 @@ const investorsTableData = [
   // { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
   // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
 ];
-
 const totalTdsFromInvestors = investorsTableData.reduce((sum, item) => sum + item.tds, 0);
 
 export const getIssuersData = () => ({
@@ -73,9 +72,10 @@ export const getIssuersData = () => ({
 
 const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: d.amount * 0.15,netdividend:d.amount * 0.85})).sort((a,b) => a.id > b.id ? 1 : -1);
 const totalTdsFromInvestorData = investorTableDataForInvestor.reduce((sum, item) => sum + item.tds, 0);
+const totalDividendFromInvestors = investorsTableData.reduce((sum, item) => sum + item.amount, 0);
 
 export const getInvestorsData = () => ({
-  metrics: baseMetrics(1500, 3, totalTdsFromInvestorData),
+  metrics: baseMetrics(totalDividendFromInvestors, 3, totalTdsFromInvestorData),
   chartData: [...baseChartData].reverse().map(d => ({ ...d, amount: d.amount * 0.8 })),
   chartConfig: chartConfigBase,
   tableData: investorTableDataForInvestor,

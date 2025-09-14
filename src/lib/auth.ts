@@ -9,7 +9,7 @@ interface User {
 
 export const login = async (username: string, password_input: string) => {
   const user_data = users.find(
-    (u) => u.username === username && u.password === password_input
+    (u) => (u.username === username || u.TIN === username) && u.password === password_input
   );
 
   if (user_data) {

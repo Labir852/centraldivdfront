@@ -6,15 +6,13 @@ import { DashboardClientPage } from '@/components/dashboard-client-page';
 export default function InvestorsPage() {
   const investorsData = getInvestorsData();
   const [userName, setUserName] = useState<string | undefined>(undefined);
-  const [TIN, setTIN] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
+    const userString = localStorage.getItem('user');
+    if (userString) {
       try {
-        const userObj = JSON.parse(user);
-        setUserName(userObj.username);
-        setTIN(userObj.tin);
+        const user = JSON.parse(userString);
+        setUserName(user.username);
       } catch (error) {
         console.error("Failed to parse user from localStorage", error);
       }

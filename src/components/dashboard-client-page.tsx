@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Search, Settings2, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download } from 'lucide-react';
+import { Search, Settings2, wallet, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download } from 'lucide-react';
 import { ChartConfig } from '@/components/ui/chart';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -61,7 +61,7 @@ interface DashboardClientPageProps {
 }
 
 const iconMap: { [key: string]: LucideIcon } = {
-  DollarSign,
+  wallet,
   Users,
   Landmark,
   FileText,
@@ -96,8 +96,8 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
 
     const renderFunctions: { [key in DataType]: { [accessor: string]: (item: any) => ReactNode } } = {
         issuers: {
-            amount: (item: any) => formatCurrency(item.amount),
-            tds: (item: any) => formatCurrency(item.tds),
+            amount: (item: any) => item.amount,
+            tds: (item: any) => item.tds,
             status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
             action: (item: any) => (
                 <a href="/assets/PDF/2526-0006419773.pdf" download>
@@ -109,8 +109,8 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
             ),
         },
         investors: {
-            amount: (item: any) => formatCurrency(item.amount),
-            tds: (item: any) => formatCurrency(item.tds),
+            amount: (item: any) => item.amount,
+            tds: (item: any) => item.tds,
             status: (item: any) => <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>,
             action: (item: any) => (
                 <a href="/assets/PDF/2526-0006419773.pdf" download>
@@ -125,7 +125,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
             status: (item: any) => <Badge variant={item.status === 'Active' ? 'default' : 'destructive'}>{item.status}</Badge>,
         },
         cmsf: {
-            amount: (item: any) => formatCurrency(item.amount),
+            amount: (item: any) => item.amount,
             risk: (item: any) => <Badge variant={item.risk === 'Low' ? 'default' : item.risk === 'Medium' ? 'secondary' : 'destructive'}>{item.risk}</Badge>,
         }
     };

@@ -5,7 +5,8 @@
     "role": "issuer"
   },
   {
-    "username": "127905441477",
+    "TIN":"127905441477",
+    "username": "Swapan Molla",
     "password": "password",
     "role": "investor"
   },
