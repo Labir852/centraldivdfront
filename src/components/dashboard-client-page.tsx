@@ -123,7 +123,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
                     return (
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger>
+                                <TooltipTrigger asChild>
                                     <span tabIndex={0}>
                                         <Button variant="outline" size="sm" disabled>
                                             <Download className="mr-2 h-4 w-4" />
@@ -173,7 +173,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
                     return (
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger>
+                                <TooltipTrigger asChild>
                                     <span tabIndex={0}>
                                         <Button variant="outline" size="sm" disabled>
                                             <Download className="mr-2 h-4 w-4" />
@@ -286,11 +286,11 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{metric.value}</div>
-                {metric.change && (
+                {/* {metric.change && (
                   <p className={`text-xs ${metric.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
                     {metric.change}
                   </p>
-                )}
+                )} */}
               </CardContent>
             </Card>
         ))}

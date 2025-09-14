@@ -62,8 +62,8 @@ export const getIssuersData = () => ({
 });
 
 const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
-const totalTdsFromInvestorData = parseFloat(investorTableDataForInvestor.reduce((sum, item) => sum + parseFloat(item.tds), 0).toFixed(2));
-const totalDividendFromInvestors = parseFloat(investorsTableData.reduce((sum, item) => sum + item.amount, 0).toFixed(2));
+const totalTdsFromInvestorData = parseFloat(investorTableDataForInvestor.reduce((sum, item) => item.status === 'Paid' ? sum + parseFloat(item.tds) : sum+0 , 0).toFixed(2));
+const totalDividendFromInvestors = parseFloat(investorsTableData.reduce((sum, item) => item.status === 'Paid' ? sum + item.amount : sum+0, 0).toFixed(2));
 
 export const getInvestorsData = () => ({
   metrics: baseMetrics(totalDividendFromInvestors, 3, totalTdsFromInvestorData),
