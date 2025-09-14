@@ -22,6 +22,15 @@ const chartConfigBase = {
   },
 } satisfies ChartConfig;
 
+const baseChartData = [
+  { name: 'Jan', amount: 6200000 },
+  { name: 'Feb', amount: 7800000 },
+  { name: 'Mar', amount: 5500000 },
+  { name: 'Apr', amount: 8900000 },
+  { name: 'May', amount: 7100000 },
+  { name: 'Jun', amount: 9400000 },
+];
+
 const baseMetrics = (total: number, investors: number, totalTds: number) => [
   { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), icon: 'Wallet' },
   { id: 'totalInvestors', title: 'Total Issuer Company', value: investors.toLocaleString(),  icon: 'Users' },
