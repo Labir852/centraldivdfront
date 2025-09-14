@@ -23,21 +23,12 @@ const chartConfigBase = {
 } satisfies ChartConfig;
 
 const baseMetrics = (total: number, investors: number, totalTds: number) => [
-  { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), icon: 'DollarSign' },
+  { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), icon: 'Wallet' },
   { id: 'totalInvestors', title: 'Total Issuer Company', value: investors.toLocaleString(),  icon: 'Users' },
  { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency((total - totalTds)),  icon: 'Landmark' },
   
   { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(totalTds), change: '-15%', icon: 'FileText' },
   ];
-
-const baseChartData = [
-  { name: 'Jan', amount: 2500000 },
-  { name: 'Feb', amount: 3050000 },
-  { name: 'Mar', amount: 2370000 },
-  { name: 'Apr', amount: 4890000 },
-  { name: 'May', amount: 3490000 },
-  { name: 'Jun', amount: 5100000 },
-];
 
 const baseTableColumns = [
     { header: 'BOID', accessor: 'id' },
@@ -51,7 +42,7 @@ const baseTableColumns = [
 ];
 
 const investorsTableData = [
-  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 300, status: 'Paid' },
+  { id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
   { id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
   { id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
   // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
