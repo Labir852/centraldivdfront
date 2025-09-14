@@ -41,6 +41,26 @@ const baseTableColumns = [
     { header: 'Status', accessor: 'status' },
 ];
 
+const issuersTableData = [
+  { sl:1, id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
+  { sl:2, id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
+  { sl:3, id: '1205590058147387', tin:'127905441477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
+  { sl:4, id: '1205590058147387',tin:'127905491477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"December 30, 2024", amount: 15000, tds: 2000, status: 'Paid' },
+  { sl:5, id: '1205590058147387', tin:'127905481477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"January 30, 2025", amount: 500, tds: 75, status: 'Paid' },
+  { sl:6, id: '1205590058147387', tin:'127905441577', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Pending' },
+  { sl:7, id: '1205590058147387',tin:'127902441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"October 01, 2024", amount: 5655, tds: 2000, status: 'Paid' },
+  { sl:8, id: '1205590058147387', tin:'127505441477', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2024", amount: 3845, tds: 75, status: 'Paid' },
+  { sl:9, id: '1205590058147387',tin:'127906441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 87963, tds: 2000, status: 'Paid' },
+  { sl:10, id: '1205590058147387', tin:'127907441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 345, tds: 45, status: 'Pending' },
+  
+  // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
+  // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
+  // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
+  // { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
+  // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
+];
+
+
 const investorsTableData = [
   { sl:1, id: '1205590058147387',tin:'127905441477', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
   { sl:2, id: '1205590058147387', tin:'127905441477', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
@@ -63,7 +83,14 @@ export const getIssuersData = () => ({
 
 const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
 const totalTdsFromInvestorData = parseFloat(investorTableDataForInvestor.reduce((sum, item) => item.status === 'Paid' ? sum + parseFloat(item.tds) : sum+0 , 0).toFixed(2));
-const totalDividendFromInvestors = parseFloat(investorsTableData.reduce((sum, item) => item.status === 'Paid' ? sum + item.amount : sum+0, 0).toFixed(2));
+const totalDividendFromInvestors = parseFloat(investorTableDataForInvestor.reduce((sum, item) => item.status === 'Paid' ? sum + item.amount : sum+0, 0).toFixed(2));
+
+
+const issuersTableDataForCMSF = [...issuersTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
+const totalTdsFromIssuersData = parseFloat(issuersTableDataForCMSF.reduce((sum, item) => item.status === 'Paid' ? sum + parseFloat(item.tds) : sum+0 , 0).toFixed(2));
+const totalDividendFromIssuers = parseFloat(issuersTableDataForCMSF.reduce((sum, item) => item.status === 'Paid' ? sum + item.amount : sum+0, 0).toFixed(2));
+
+
 
 export const getInvestorsData = () => ({
   metrics: baseMetrics(totalDividendFromInvestors, 3, totalTdsFromInvestorData),
@@ -103,10 +130,10 @@ export const getRegulatorsData = () => ({
 
 export const getCmsfData = () => ({
   metrics: [
-    { id: 'fundValue', title: 'Total Fund Value', value: formatCurrency(1.2 * 1e9), change: '+3.5%', icon: 'DollarSign' },
-    { id: 'ytdGrowth', title: 'YTD Growth', value: '7.8%', change: '', icon: 'ArrowUp' },
-    { id: 'unclaimedDividends', title: 'Unclaimed Dividends', value: formatCurrency(45.2 * 1e6), change: '-1.2%', icon: 'ArrowDown' },
-    { id: 'participatingIssuers', title: 'Participating Issuers', value: '850', change: '+25', icon: 'Landmark' },
+    { id: 'fundValue', title: 'Total Dividend', value: totalDividendFromIssuers, change: '+3.5%', icon: 'Wallet' },
+    { id: 'ytdGrowth', title: 'Total TDS', value: totalTdsFromIssuersData, change: '', icon: 'Landmark' },
+    { id: 'unclaimedDividends', title: 'Total Issuers', value: 3, change: '-1.2%', icon: 'Users' },
+    { id: 'participatingIssuers', title: 'Total Investors', value: 10, change: '+25', icon: 'Users' },
   ],
   chartData: baseChartData.map(d => ({ ...d, amount: d.amount * 50 })),
   chartConfig: chartConfigBase,
