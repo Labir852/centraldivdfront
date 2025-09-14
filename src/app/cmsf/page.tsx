@@ -8,7 +8,7 @@ export default function CmsfPage() {
       title="Capital Market Stabilization Fund (CMSF)"
       description="Track the performance and specifics of the stabilization fund."
       data={cmsfData}
-      searchable={false}
+      searchable={true}
       dataType="cmsf"
     />
   );

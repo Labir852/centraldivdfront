@@ -81,7 +81,7 @@ const formatCurrency = (value: number) => {
   }).format(value);
 };
 
-export function DashboardClientPage({ title, description, data: rawData, searchable = false, dataType }: DashboardClientPageProps) {
+export function DashboardClientPage({ title, description, data: rawData, searchable = true, dataType }: DashboardClientPageProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const data = useMemo(() => {
@@ -199,10 +199,43 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
             },
         },
         regulators: {
-            status: (item: any) => <Badge variant={item.status === 'Active' ? 'default' : 'destructive'}>{item.status}</Badge>,
+          status: (item: any) => {
+            if (item.status === 'Pending') {
+              return (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Badge variant="secondary">{item.status}</Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Payment is pending</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              );
+            }
+            return <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>;
+          },
         },
         cmsf: {
             amount: (item: any) => item.amount,
+            status: (item: any) => {
+              if (item.status === 'Pending') {
+                return (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Badge variant="secondary">{item.status}</Badge>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Payment is pending</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                );
+              }
+              return <Badge variant={item.status === 'Paid' ? 'default' : 'secondary'}>{item.status}</Badge>;
+            },
             risk: (item: any) => <Badge variant={item.risk === 'Low' ? 'default' : item.risk === 'Medium' ? 'secondary' : 'destructive'}>{item.risk}</Badge>,
         }
     };
@@ -228,8 +261,9 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     );
   }, [data.tableData, searchTerm, searchable]);
 
-  const showChart = dataType !== 'investors';
-  
+  const restrictedTypes = ['investors', 'issuer', 'cmsf', 'regulator'];
+  const showChart = !restrictedTypes.includes(dataType);
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -297,19 +331,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
       </div>
 
       <div className={`grid gap-6 ${showChart ? 'lg:grid-cols-5' : ''}`}>
-        {showChart && (
-            <Card className="lg:col-span-3">
-            <CardHeader>
-                <CardTitle className="font-headline">Financial Overview</CardTitle>
-                <CardDescription>A summary of recent financial activity.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <div className="h-[300px] w-full">
-                    <FinancialChart chartData={data.chartData} chartConfig={data.chartConfig} />
-                </div>
-            </CardContent>
-            </Card>
-        )}
+       
         <Card className={showChart ? "lg:col-span-2" : "w-full"}>
             <CardHeader>
                 <CardTitle className="font-headline">Detailed Records</CardTitle>

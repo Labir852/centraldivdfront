@@ -8,7 +8,7 @@ export default function RegulatorsPage() {
       title="Regulators"
       description="Access metrics and detailed information for regulatory bodies."
       data={regulatorsData}
-      searchable={false}
+      searchable={true}
       dataType="regulators"
     />
   );

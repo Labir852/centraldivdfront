@@ -1,6 +1,6 @@
 [
   {
-    "username": "GrameenPhone",
+    "username": "gp",
     "password": "password",
     "role": "issuer"
   },
@@ -11,12 +11,12 @@
     "role": "investor"
   },
   {
-    "username": "BSEC",
+    "username": "bsec",
     "password": "password",
     "role": "regulator"
   },
   {
-    "username": "CMSF",
+    "username": "cmsf",
     "password": "password",
     "role": "cmsf"
   }
