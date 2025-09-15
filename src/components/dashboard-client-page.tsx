@@ -262,7 +262,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     );
   }, [data.tableData, searchTerm, searchable]);
 
-  const restrictedTypes = ['investors', 'issuer', 'cmsf', 'regulator'];
+  const restrictedTypes = ['investor', 'issuer', 'cmsf', 'regulator'];
   const showChart = !restrictedTypes.includes(dataType);
 
   return (
@@ -332,8 +332,20 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
       </div>
 
       <div className={`grid gap-6 ${showChart ? 'lg:grid-cols-5' : ''}`}>
-       
-        <Card className={showChart ? "lg:col-span-5" : "w-full"}>
+      {showChart && (
+            <Card className="lg:col-span-3">
+            <CardHeader>
+                <CardTitle className="font-headline">Financial Overview</CardTitle>
+                <CardDescription>A summary of recent financial activity.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="h-[300px] w-full">
+                    <FinancialChart chartData={data.chartData} chartConfig={data.chartConfig} />
+                </div>
+            </CardContent>
+            </Card>
+        )}
+        <Card className={showChart ? "lg:col-span-2" : "w-full"}>
             <CardHeader>
                 <CardTitle className="font-headline">Detailed Records</CardTitle>
                 <CardDescription>A complete list of all records.</CardDescription>
