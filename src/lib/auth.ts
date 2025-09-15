@@ -5,6 +5,7 @@ import users from '@/lib/users.json';
 interface User {
   username: string;
   role: string;
+  TIN:string;
 }
 
 export const login = async (username: string, password_input: string) => {
@@ -13,7 +14,7 @@ export const login = async (username: string, password_input: string) => {
   );
 
   if (user_data) {
-    const user = { username: user_data.username, role: user_data.role };
+    const user = { username: user_data.username, role: user_data.role,tin:user_data?.TIN };
     localStorage.setItem('user', JSON.stringify(user));
     return { success: true, user };
   } else {

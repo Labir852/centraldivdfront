@@ -14,6 +14,7 @@ import { Search, Settings2, Wallet, DollarSign, type LucideIcon, Users, Landmark
 import { ChartConfig } from '@/components/ui/chart';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { getSession } from '@/lib/auth';
 
 const FinancialChart = dynamic(() => import('@/components/financial-chart').then(mod => mod.FinancialChart), {
   ssr: false,
@@ -83,7 +84,7 @@ const formatCurrency = (value: number) => {
 
 export function DashboardClientPage({ title, description, data: rawData, searchable = true, dataType }: DashboardClientPageProps) {
   const [searchTerm, setSearchTerm] = useState('');
-
+  const user = getSession();
   const data = useMemo(() => {
     return {
         ...rawData,
@@ -268,7 +269,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Welcome {title}</h1>
+          <h1 className="text-3xl font-bold font-headline">Welcome {title} {dataType === 'investors' ? '(TIN:127905441477)' : null} </h1>
           <p className="text-muted-foreground">{description}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -332,7 +333,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
 
       <div className={`grid gap-6 ${showChart ? 'lg:grid-cols-5' : ''}`}>
        
-        <Card className={showChart ? "lg:col-span-2" : "w-full"}>
+        <Card className={showChart ? "lg:col-span-5" : "w-full"}>
             <CardHeader>
                 <CardTitle className="font-headline">Detailed Records</CardTitle>
                 <CardDescription>A complete list of all records.</CardDescription>
