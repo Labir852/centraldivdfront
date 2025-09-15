@@ -262,7 +262,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     );
   }, [data.tableData, searchTerm, searchable]);
 
-  const restrictedTypes = ['investor', 'issuer', 'cmsf', 'regulator'];
+  const restrictedTypes = ['investors', 'issuers', 'cmsf', 'regulators'];
   const showChart = !restrictedTypes.includes(dataType);
 
   return (
