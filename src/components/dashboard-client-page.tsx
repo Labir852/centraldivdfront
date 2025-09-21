@@ -10,10 +10,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Search, Settings2, Wallet, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download } from 'lucide-react';
+import { Search, Settings2, Wallet, DollarSign, type LucideIcon, Users, Landmark, FileText, ArrowUp, ArrowDown, Download, Calendar as CalendarIcon } from 'lucide-react';
 import { ChartConfig } from '@/components/ui/chart';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { getSession } from '@/lib/auth';
 
 const FinancialChart = dynamic(() => import('@/components/financial-chart').then(mod => mod.FinancialChart), {
@@ -36,6 +37,7 @@ type ChartDataItem = {
 };
 
 type TableDataItem = {
+  financialYear: string;
   [key: string]: any;
 };
 
@@ -84,6 +86,7 @@ const formatCurrency = (value: number) => {
 
 export function DashboardClientPage({ title, description, data: rawData, searchable = true, dataType }: DashboardClientPageProps) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [financialYear, setFinancialYear] = useState('2025-2026');
   const user = getSession();
   const data = useMemo(() => {
     return {
@@ -252,15 +255,19 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
   const [visibleMetrics, setVisibleMetrics] = useState<Record<string, boolean>>(initialVisibleMetrics);
 
   const filteredTableData = useMemo(() => {
+    let tableData = data.tableData;
+
+    tableData = tableData.filter(item => item.financialYear === financialYear);
+
     if (!searchable || !searchTerm) {
-      return data.tableData;
+      return tableData;
     }
-    return data.tableData.filter((row) =>
+    return tableData.filter((row) =>
       Object.values(row).some((value) =>
         String(value).toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-  }, [data.tableData, searchTerm, searchable]);
+  }, [data.tableData, searchTerm, searchable, financialYear]);
 
   const restrictedTypes = ['investors', 'issuers', 'cmsf', 'regulators'];
   const showChart = !restrictedTypes.includes(dataType);
@@ -272,18 +279,30 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
           <h1 className="text-2xl font-headline">Welcome <span className="text-3xl font-bold">{title}</span> {dataType === 'investors' ? '(TIN:127905441477)' : null} </h1>
           <p className="text-muted-foreground">{description}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {searchable && (
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search..."
-                className="pl-9 w-full sm:w-64"
+                className="pl-9 w-full sm:w-48"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
           )}
+           <Select value={financialYear} onValueChange={setFinancialYear}>
+              <SelectTrigger className="w-full sm:w-auto">
+                <div className='flex items-center gap-2'>
+                    <CalendarIcon className="h-4 w-4" />
+                    <SelectValue placeholder="Financial Year" />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2025-2026">2025-2026</SelectItem>
+                <SelectItem value="2024-2025">2024-2025</SelectItem>
+              </SelectContent>
+            </Select>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">
@@ -321,11 +340,6 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{metric.value}</div>
-                {/* {metric.change && (
-                  <p className={`text-xs ${metric.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
-                    {metric.change}
-                  </p>
-                )} */}
               </CardContent>
             </Card>
         ))}
@@ -347,7 +361,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         )}
         <Card className={showChart ? "lg:col-span-2" : "w-full"}>
             <CardHeader>
-                <CardTitle className="font-headline">Detailed Records upto ( July 01, 2025 - June 30, 2026 )</CardTitle>
+                <CardTitle className="font-headline">Detailed Records for FY {financialYear}</CardTitle>
                 <CardDescription>A complete list of all records </CardDescription>
             </CardHeader>
             <CardContent>
@@ -387,7 +401,3 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     </div>
   );
 }
-
-    
-
-    

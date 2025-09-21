@@ -1,4 +1,5 @@
 
+
 import { ChartConfig } from '@/components/ui/chart';
 import React from 'react';
 
@@ -23,15 +24,16 @@ const baseChartData = [
 
 const baseMetrics = (total: number, investors: number, totalTds: number) => [
   { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), icon: 'Wallet' },
-  { id: 'totalInvestors', title: 'Total Participants', value: investors.toLocaleString(),  icon: 'Users' },
+  { id: 'totalInvestors', title: 'Total Entities', value: investors.toLocaleString(),  icon: 'Users' },
   { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency((total - totalTds)),  icon: 'Landmark' },
   { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(totalTds), change: '-15%', icon: 'FileText' },
   ];
 
 const baseTableColumns = [
     { header: 'SL', accessor: 'sl' },
+    {header: 'TIN', accessor:'tin'},
     { header: 'BOID', accessor: 'id' },
-    { header: 'TIN', accessor: 'tin' },
+    { header: 'DP', accessor: 'dp' },
     { header: 'Trade Code', accessor: 'tradecode' },
     { header: 'Issuer Name', accessor: 'name' },
     { header: 'Record Date', accessor: 'recorddate' },
@@ -41,43 +43,32 @@ const baseTableColumns = [
     { header: 'Status', accessor: 'status' },
 ];
 
+const getFinancialYear = (dateString: string) => {
+  const year = parseInt(dateString.split(' ')[2], 10);
+  if (year === 2024) return '2024-2025';
+  if (year === 2025) return '2025-2026';
+  return 'N/A';
+};
+
 const cmsfTableData = [
-  { sl:1, id: '1205590058147387',tin:'127905441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
-  { sl:2, id: '1205590058147387', tin:'127905441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
-  { sl:3, id: '1205590058147387', tin:'127905441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
-  { sl:4, id: '1205590058147387',tin:'127905491477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"December 30, 2024", amount: 15000, tds: 2000, status: 'Paid' },
-  { sl:5, id: '1205590058147387', tin:'127905481477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"January 30, 2025", amount: 500, tds: 75, status: 'Paid' },
-  { sl:6, id: '1205590058147387', tin:'127905441577', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Paid' },
-  { sl:7, id: '1205590058147387',tin:'127902441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"October 01, 2024", amount: 5655, tds: 2000, status: 'Paid' },
-  { sl:8, id: '1205590058147387', tin:'127505441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2024", amount: 3845, tds: 75, status: 'Pending' },
-  { sl:9, id: '1205590058147387',tin:'127906441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 87963, tds: 2000, status: 'Paid' },
-  { sl:10, id: '1205590058147387', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 345, tds: 45, status: 'Pending' },
-  
-  // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
-  // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
-  // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
-  // { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
-  // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
-];
+  { sl:1, id: '1201430058147387',  dp: 'Trust Bank Limited',tin:'127905441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
+  { sl:2, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited', tin:'727863441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 30, 2025", amount: 300, tds: 45, status: 'Pending' },
+  { sl:3, id: '1201730058147387',  dp: 'Kazi Equities Ltd.', tin:'823405441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"December 30, 2024", amount: 500, tds: 75, status: 'Paid' },
+  { sl:4, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited',tin:'527905491277', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"January 30, 2024", amount: 15000, tds: 2000, status: 'Paid' },
+  { sl:5, id: '1206600058147387',  dp: 'KDS Shares and Securities Limited', tin:'353905481477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"December 30, 2024", amount: 500, tds: 75, status: 'Paid' },
+  { sl:6, id: '1204030058147387',  dp: 'Lanka Bangla Securities Limited Banani', tin:'59305441577', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Paid' },
+  { sl:7, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited',tin:'895902441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"October 01, 2024", amount: 5655, tds: 2000, status: 'Paid' },
+  { sl:8, id: '1204580058147387',  dp: 'Investment Corporation Of Bangladesh', tin:'888505441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"September 30, 2024", amount: 3845, tds: 75, status: 'Pending' },
+  { sl:9, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited',tin:'321906441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 87963, tds: 2000, status: 'Paid' },
+  { sl:10, id: '1205590058147387', dp: 'UCB Stock Brokerage Limited', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 31, 2024", amount: 345, tds: 45, status: 'Pending' },
+].map(item => ({ ...item, financialYear: getFinancialYear(item.recorddate) }));
+
 
 const issuerTableData  = [
-  // { sl:1, id: '1205590058147387',tin:'127905441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
-  { sl:1, id: '1205590058147387', tin:'127905441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
-  // { sl:3, id: '1205590058147387', tin:'127905441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
-  // { sl:4, id: '1205590058147387',tin:'127905491477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"December 30, 2024", amount: 15000, tds: 2000, status: 'Paid' },
-  // { sl:5, id: '1205590058147387', tin:'127905481477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"January 30, 2025", amount: 500, tds: 75, status: 'Paid' },
-  { sl:2, id: '1205590058147387', tin:'127905441577', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Paid' },
-  // { sl:7, id: '1205590058147387',tin:'127902441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"October 01, 2024", amount: 5655, tds: 2000, status: 'Paid' },
-  // { sl:8, id: '1205590058147387', tin:'127505441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2024", amount: 3845, tds: 75, status: 'Pending' },
-  // { sl:9, id: '1205590058147387',tin:'127906441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 87963, tds: 2000, status: 'Paid' },
-  { sl:3, id: '1205590058147387', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 345, tds: 45, status: 'Pending' },
-  
-  // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
-  // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
-  // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
-  // { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
-  // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
-];
+  { sl:1, id: '1201430058147387', dp: 'Trust Bank Limited', tin:'127905441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 30, 2025", amount: 300, tds: 45, status: 'Pending' },
+  { sl:2, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited', tin:'127905441577', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Paid' },
+  { sl:3, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 31, 2024", amount: 345, tds: 45, status: 'Pending' },
+].map(item => ({ ...item, financialYear: getFinancialYear(item.recorddate) }));
 
 const issuerTableDataForIssuer= [...issuerTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
 const totalTdsFromIssuerData = parseFloat(issuerTableDataForIssuer.reduce((sum, item) => item.status === 'Paid' ? sum + parseFloat(item.tds) : sum+0 , 0).toFixed(2));
@@ -86,15 +77,10 @@ const totalDividendFromIssuers = parseFloat(issuerTableDataForIssuer.reduce((sum
 
 
 const investorsTableData = [
-  { sl:1, id: '1205590058147387',tin:'127905441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
-  { sl:2, id: '1205590058147387', tin:'127905441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"June 30, 2025", amount: 300, tds: 45, status: 'Pending' },
-  { sl:3, id: '1205590058147387', tin:'127905441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"June 30, 2025", amount: 500, tds: 75, status: 'Paid' },
-  // { id: 'INV-004', name: 'Emma Brown', amount: 450000, tds: 45000, status: 'Paid' },
-  // { id: 'INV-005', name: 'Oliver Jones', amount: 1750000, tds: 175000, status: 'Pending' },
-  // { id: 'INV-006', name: 'Ava Garcia', amount: 620000, tds: 62000, status: 'Paid' },
-  // { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
-  // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
-];
+  { sl:1, id: '1201430058147387',  dp: 'Trust Bank Limited',tin:'127905441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 13333.33, tds: 2000, status: 'Paid' },
+  { sl:2, id: '1205590058147387',dp: 'UCB Stock Brokerage Limited', tin:'127905441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Pending' },
+  { sl:3, id: '1205590058147387', dp: 'UCB Stock Brokerage Limited', tin:'127905441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"December 30, 2024", amount: 500, tds: 75, status: 'Paid' },
+].map(item => ({ ...item, financialYear: getFinancialYear(item.recorddate) }));
 
 const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
 const totalTdsFromInvestorData = parseFloat(investorTableDataForInvestor.reduce((sum, item) => item.status === 'Paid' ? sum + parseFloat(item.tds) : sum+0 , 0).toFixed(2));
@@ -110,7 +96,7 @@ const totalDividendFromInvestorsCMSF = parseFloat(cmsfTableDataForCMSF.reduce((s
 export const getIssuersData = () => ({
   metrics: [
     { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(totalDividendFromIssuers), change: '+3.5%', icon: 'Wallet' },
-    { id: 'totalInvestors', title: 'Total Investor', value: 3, change: '0', icon: 'Landmark' },
+    { id: 'totalInvestors', title: 'Total Investors', value: 3, change: '0', icon: 'Landmark' },
     { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency(totalDividendFromIssuers-totalTdsFromIssuerData), change: '-1.2%', icon: 'Users' },
     { id: 'taxAmount', title: 'Total Tax(TDS)', value: formatCurrency(totalTdsFromIssuerData), change: '+25', icon: 'Users' },
   ],
@@ -122,7 +108,12 @@ export const getIssuersData = () => ({
 
 
 export const getInvestorsData = () => ({
-  metrics: baseMetrics(totalDividendFromInvestors, 3, totalTdsFromInvestorData),
+  metrics: [
+    { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(totalDividendFromInvestors), icon: 'Wallet' },
+    { id: 'totalInvestors', title: 'Total Issuers', value: 3,  icon: 'Users' },
+    { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency((totalDividendFromInvestors - totalTdsFromInvestorData)),  icon: 'Landmark' },
+    { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(totalTdsFromInvestorData), change: '-15%', icon: 'FileText' },
+    ],
   chartData: [...baseChartData].reverse().map(d => ({ ...d, amount: d.amount * 0.8 })),
   chartConfig: chartConfigBase,
   tableData: investorTableDataForInvestor,
@@ -143,10 +134,10 @@ export const getRegulatorsData = () => ({
     }
   } satisfies ChartConfig,
   tableData: [
-    { id: 'REG-01', name: 'Securities Board', region: 'National', active_cases: 5, status: 'Active' },
-    { id: 'REG-02', name: 'Financial Conduct Group', region: 'Western', active_cases: 2, status: 'Active' },
-    { id: 'REG-03', name: 'Market Oversight Panel', region: 'Eastern', active_cases: 8, status: 'Active' },
-    { id: 'REG-04', name: 'Investment Protection Agy', region: 'National', active_cases: 0, status: 'Inactive' },
+    { id: 'REG-01', name: 'Securities Board', region: 'National', active_cases: 5, status: 'Active', financialYear: '2025-2026' },
+    { id: 'REG-02', name: 'Financial Conduct Group', region: 'Western', active_cases: 2, status: 'Active', financialYear: '2025-2026' },
+    { id: 'REG-03', name: 'Market Oversight Panel', region: 'Eastern', active_cases: 8, status: 'Active', financialYear: '2024-2025' },
+    { id: 'REG-04', name: 'Investment Protection Agy', region: 'National', active_cases: 0, status: 'Inactive', financialYear: '2024-2025' },
   ],
   tableColumns: [
     { header: 'Regulator ID', accessor: 'id' },
