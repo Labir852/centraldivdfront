@@ -63,6 +63,7 @@ const cmsfTableData = [
   { sl:10, id: '1205590058147387', dp: 'UCB Stock Brokerage Limited', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 31, 2024", amount: 345, tds: 45, status: 'Paid' },
 ].map(item => ({ ...item, financialYear: getFinancialYear(item.recorddate) }));
 
+const investorTableDataForCMSF = [...cmsfTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
 
 const issuerTableData  = [
   { sl:1, id: '1201430058147387', dp: 'Trust Bank Limited', tin:'127905441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 30, 2025", amount: 300, tds: 45, status: 'Pending' },
@@ -157,6 +158,6 @@ export const getCmsfData = () => ({
   ],
   chartData: baseChartData.map(d => ({ ...d, amount: d.amount * 50 })),
   chartConfig: chartConfigBase,
-  tableData: cmsfTableData,
+  tableData: cmsfTableDataForCMSF,
   tableColumns: baseTableColumns
 });
