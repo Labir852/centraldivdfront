@@ -361,7 +361,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         )}
         <Card className={showChart ? "lg:col-span-2" : "w-full"}>
             <CardHeader>
-                <CardTitle className="font-headline">Detailed Records for FY {financialYear}</CardTitle>
+                <CardTitle className="font-headline">Detailed Records upto {financialYear ==='2024-2025' ? 'July 01, 2024 - June 30, 2025' :  'July 01, 2025 - June 30, 2026' }</CardTitle>
                 <CardDescription>A complete list of all records </CardDescription>
             </CardHeader>
             <CardContent>

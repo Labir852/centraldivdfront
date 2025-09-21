@@ -58,16 +58,16 @@ const cmsfTableData = [
   { sl:5, id: '1206600058147387',  dp: 'KDS Shares and Securities Limited', tin:'353905481477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"December 30, 2024", amount: 500, tds: 75, status: 'Paid' },
   { sl:6, id: '1204030058147387',  dp: 'Lanka Bangla Securities Limited Banani', tin:'59305441577', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Paid' },
   { sl:7, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited',tin:'895902441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"October 01, 2024", amount: 5655, tds: 2000, status: 'Paid' },
-  { sl:8, id: '1204580058147387',  dp: 'Investment Corporation Of Bangladesh', tin:'888505441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"September 30, 2024", amount: 3845, tds: 75, status: 'Pending' },
+  { sl:8, id: '1204580058147387',  dp: 'Investment Corporation Of Bangladesh', tin:'888505441477', tradecode:'AIBL1STIMF', name: 'AIBL 1st Islamic Mutual Fund', recorddate:"September 30, 2024", amount: 3845, tds: 75, status: 'Paid' },
   { sl:9, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited',tin:'321906441477', tradecode:'BATBC', name: 'British American Tobacco Bangladesh Company Ltd. ', recorddate:"June 30, 2025", amount: 87963, tds: 2000, status: 'Paid' },
-  { sl:10, id: '1205590058147387', dp: 'UCB Stock Brokerage Limited', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 31, 2024", amount: 345, tds: 45, status: 'Pending' },
+  { sl:10, id: '1205590058147387', dp: 'UCB Stock Brokerage Limited', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 31, 2024", amount: 345, tds: 45, status: 'Paid' },
 ].map(item => ({ ...item, financialYear: getFinancialYear(item.recorddate) }));
 
 
 const issuerTableData  = [
   { sl:1, id: '1201430058147387', dp: 'Trust Bank Limited', tin:'127905441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 30, 2025", amount: 300, tds: 45, status: 'Pending' },
   { sl:2, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited', tin:'127905441577', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"February 30, 2025", amount: 300, tds: 45, status: 'Paid' },
-  { sl:3, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 31, 2024", amount: 345, tds: 45, status: 'Pending' },
+  { sl:3, id: '1205590058147387',  dp: 'UCB Stock Brokerage Limited', tin:'127907441477', tradecode:'GP', name: 'Grameenphone Ltd.', recorddate:"March 31, 2024", amount: 345, tds: 45, status: 'Paid' },
 ].map(item => ({ ...item, financialYear: getFinancialYear(item.recorddate) }));
 
 const issuerTableDataForIssuer= [...issuerTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
