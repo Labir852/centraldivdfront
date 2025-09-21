@@ -23,9 +23,8 @@ const baseChartData = [
 
 const baseMetrics = (total: number, investors: number, totalTds: number) => [
   { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(total), icon: 'Wallet' },
-  { id: 'totalInvestors', title: 'Total Investor', value: investors.toLocaleString(),  icon: 'Users' },
- { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency((total - totalTds)),  icon: 'Landmark' },
-  
+  { id: 'totalInvestors', title: 'Total Participants', value: investors.toLocaleString(),  icon: 'Users' },
+  { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency((total - totalTds)),  icon: 'Landmark' },
   { id: 'taxAmount', title: 'Total Tax (TDS)', value: formatCurrency(totalTds), change: '-15%', icon: 'FileText' },
   ];
 
@@ -96,30 +95,30 @@ const investorsTableData = [
   // { id: 'INV-007', name: 'Elijah Miller', amount: 3100000, tds: 310000, status: 'Paid' },
   // { id: 'INV-008', name: 'Charlotte Davis', amount: 940000, tds: 94000, status: 'Pending' },
 ];
-const totalTdsFromInvestors = investorsTableData.reduce((sum, item) => sum + item.tds, 0);
-
-export const getIssuersData = () => ({
-  metrics: [
-    { id: 'totalAmount', title: 'Total Dividend Amount', value: totalDividendFromIssuers, change: '+3.5%', icon: 'Wallet' },
-    { id: 'totalInvestors', title: 'Total Investor', value: 3, change: '0', icon: 'Landmark' },
-    { id: 'avgHolding', title: 'Net Dividend', value: (totalDividendFromIssuers-totalTdsFromIssuerData), change: '-1.2%', icon: 'Users' },
-    { id: 'taxAmount', title: 'Total Tax(TDS)', value: totalTdsFromIssuerData, change: '+25', icon: 'Users' },
-  ],
-  chartData: baseChartData,
-  chartConfig: chartConfigBase,
-  tableData: issuerTableDataForIssuer,
-  tableColumns: baseTableColumns
-});
 
 const investorTableDataForInvestor = [...investorsTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
 const totalTdsFromInvestorData = parseFloat(investorTableDataForInvestor.reduce((sum, item) => item.status === 'Paid' ? sum + parseFloat(item.tds) : sum+0 , 0).toFixed(2));
 const totalDividendFromInvestors = parseFloat(investorTableDataForInvestor.reduce((sum, item) => item.status === 'Paid' ? sum + item.amount : sum+0, 0).toFixed(2));
 
 
+
 const cmsfTableDataForCMSF = [...cmsfTableData].map(d => ({ ...d, id: d.id.replace('INV', 'INVR'), amount: d.amount , tds: (d.amount * 0.15).toFixed(2),netdividend:(d.amount * 0.85).toFixed(2)})).sort((a,b) => a.sl > b.sl ? 1 : -1);
 const totalTdsFromIssuersData = parseFloat(cmsfTableDataForCMSF.reduce((sum, item) => item.status === 'Paid' ? sum + parseFloat(item.tds) : sum+0 , 0).toFixed(2));
 const totalDividendFromInvestorsCMSF = parseFloat(cmsfTableDataForCMSF.reduce((sum, item) => item.status === 'Paid' ? sum + item.amount : sum+0, 0).toFixed(2));
 
+
+export const getIssuersData = () => ({
+  metrics: [
+    { id: 'totalAmount', title: 'Total Dividend Amount', value: formatCurrency(totalDividendFromIssuers), change: '+3.5%', icon: 'Wallet' },
+    { id: 'totalInvestors', title: 'Total Investor', value: 3, change: '0', icon: 'Landmark' },
+    { id: 'avgHolding', title: 'Net Dividend', value: formatCurrency(totalDividendFromIssuers-totalTdsFromIssuerData), change: '-1.2%', icon: 'Users' },
+    { id: 'taxAmount', title: 'Total Tax(TDS)', value: formatCurrency(totalTdsFromIssuerData), change: '+25', icon: 'Users' },
+  ],
+  chartData: baseChartData,
+  chartConfig: chartConfigBase,
+  tableData: issuerTableDataForIssuer,
+  tableColumns: baseTableColumns
+});
 
 
 export const getInvestorsData = () => ({
@@ -160,8 +159,8 @@ export const getRegulatorsData = () => ({
 
 export const getCmsfData = () => ({
   metrics: [
-    { id: 'fundValue', title: 'Total Dividend', value: totalDividendFromInvestorsCMSF, change: '+3.5%', icon: 'Wallet' },
-    { id: 'ytdGrowth', title: 'Total TDS', value: totalTdsFromIssuersData, change: '', icon: 'Landmark' },
+    { id: 'fundValue', title: 'Total Dividend', value: formatCurrency(totalDividendFromInvestorsCMSF), change: '+3.5%', icon: 'Wallet' },
+    { id: 'ytdGrowth', title: 'Total TDS', value: formatCurrency(totalTdsFromIssuersData), change: '', icon: 'Landmark' },
     { id: 'unclaimedDividends', title: 'Total Issuers', value: 3, change: '-1.2%', icon: 'Users' },
     { id: 'participatingIssuers', title: 'Total Investors', value: 10, change: '+25', icon: 'Users' },
   ],

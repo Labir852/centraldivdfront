@@ -269,7 +269,7 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Welcome {title} {dataType === 'investors' ? '(TIN:127905441477)' : null} </h1>
+          <h1 className="text-2xl font-headline">Welcome <span className="text-3xl font-bold">{title}</span> {dataType === 'investors' ? '(TIN:127905441477)' : null} </h1>
           <p className="text-muted-foreground">{description}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -347,8 +347,8 @@ export function DashboardClientPage({ title, description, data: rawData, searcha
         )}
         <Card className={showChart ? "lg:col-span-2" : "w-full"}>
             <CardHeader>
-                <CardTitle className="font-headline">Detailed Records</CardTitle>
-                <CardDescription>A complete list of all records.</CardDescription>
+                <CardTitle className="font-headline">Detailed Records upto ( July 01, 2025 - June 30, 2026 )</CardTitle>
+                <CardDescription>A complete list of all records </CardDescription>
             </CardHeader>
             <CardContent>
                  <ScrollArea className={showChart ? "h-[340px]" : ""}>
